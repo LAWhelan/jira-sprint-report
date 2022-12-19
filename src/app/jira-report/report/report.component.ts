@@ -13,7 +13,7 @@ export class ReportComponent {
   /**Constants**/
   private DONE: string = 'green';
   private IN_PROGRESS: string = 'yellow';
-  private NOT_STARTED: string = 'grey-blue';
+  private NOT_STARTED: string = 'blue-gray';
 
   /**Dependencies and Observables**/
   private jiraService: JiraService;
@@ -54,7 +54,8 @@ export class ReportComponent {
        map(sprint => sprint.issues),
        tap(issues=> {
          this.issues = issues;
-         this.stories = issues.filter(i => (i.fields.issuetype.name === 'Story' || i.fields.issuetype.name === 'Bug'));
+         this.stories = issues.filter(i =>
+           (i.fields.issuetype.name === 'Story' || i.fields.issuetype.name === 'Bug' || i.fields.issuetype.name === 'Task'));
        })
      ).subscribe({
        next: res => this.processSprintMetrics(),
@@ -65,6 +66,8 @@ export class ReportComponent {
 
   processSprintMetrics() {
     this.totalPoints = 0;
+    this.completedPoints = 0;
+    this.inProgressPoints = 0;
     this.stories.forEach(val => {
       if(+val.fields.customfield_10046) {
         this.totalPoints += +val.fields.customfield_10046;
@@ -104,7 +107,7 @@ export class ReportComponent {
       const story2StatusType: string = story2.fields.status.name;
       if(story1Color === story2Color) {
         if(story1StatusType === story2StatusType)
-          return 0;
+          return +story2.fields.customfield_10046 - +story1.fields.customfield_10046;
         return story1StatusType > story2StatusType ? 1 : -1
       }
       if(story1Color === this.NOT_STARTED)
