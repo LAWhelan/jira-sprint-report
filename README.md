@@ -2,6 +2,13 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
 
+## Important
+In order to run this app you need to provide an api key to your jira instance.
+
+Create token: https://id.atlassian.com/manage-profile/security/api-tokens
+Once you have your token create the api key as base64Encode(username@domain.com:api-token)
+Add encoded basic auth token to /src/environments/environment.ts
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
