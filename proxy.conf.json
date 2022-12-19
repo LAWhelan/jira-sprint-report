@@ -1,0 +1,8 @@
+{
+  "/rest/*" : {
+    "target" : "https://razrhq.atlassian.net",
+    "secure" : false,
+    "changeOrigin":  true
+  }
+
+}

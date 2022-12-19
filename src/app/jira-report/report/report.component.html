@@ -1,0 +1,43 @@
+<input type="text" [(ngModel)]="sprintKey"/>
+<button #submitButton type="button">Submit</button>
+<br/>
+<br/>
+<div><b>{{sprint.name}}</b></div>
+<br/>
+<div class="sprint-field">Starts on: </div><div class="sprint-field">{{sprint.startDate | date}}</div>
+<br/>
+<div class="sprint-field">Ends on: </div><div class="sprint-field">{{sprint.endDate | date}}</div>
+<br/>
+<div class="sprint-field">Days left: </div><div class="sprint-field">{{getBusinessDatesCount(sprint.endDate)}}</div>
+<br/>
+<br/>
+<div class="sprint-field">{{(totalPoints - inProgressPoints - completedPoints)}} / {{totalPoints}} </div><div class="sprint-field">Not Started</div>
+<div class="sprint-field">{{(totalPoints - inProgressPoints - completedPoints) / totalPoints | percent}}</div>
+<br/>
+<div class="sprint-field">{{inProgressPoints}} / {{totalPoints}} </div><div class="sprint-field">In Progress</div>
+<div class="sprint-field">{{inProgressPoints / totalPoints | percent}}</div>
+<br/>
+<div class="sprint-field">{{completedPoints}} / {{totalPoints}} </div><div class="sprint-field">Completed</div>
+<div class="sprint-field">{{completedPoints / totalPoints | percent}}</div>
+<br/>
+<br/>
+<div class="progressBar">
+  <div class="progress-bar__notStarted" [style.width]='calculateWidth((totalPoints - inProgressPoints - completedPoints), totalPoints)'>{{(totalPoints - inProgressPoints - completedPoints)}}</div>
+  <div class="progress-bar__inProgress" [style.width]="calculateWidth(inProgressPoints, totalPoints)">{{inProgressPoints}}</div>
+  <div class="progress-bar__done" [style.width]="calculateWidth(completedPoints, totalPoints)">{{completedPoints}}</div>
+</div>
+<div *ngFor="let issue of stories">
+  <div class="row">
+    <div class="issue-field"><a href="{{issue.self}}">{{issue.key}}</a></div>
+    <div class="issue-field">{{issue.fields.issuetype.name}}</div>
+    <div class="issue-field">{{issue.fields.status.name}}</div>
+    <div class="issue-field">{{issue.fields.customfield_10046}}</div>
+
+    <div *ngIf="issue.totalSubtasks > 0" class="issue-field">{{issue.subtasksNotStarted/issue.totalSubtasks | percent}} not started</div>
+    <div *ngIf="issue.totalSubtasks === 0" class="issue-field">No Sub-tasks</div>
+    <div *ngIf="issue.totalSubtasks > 0" class="issue-field">{{issue.subtasksInProgress/issue.totalSubtasks | percent}} in progress</div>
+    <div *ngIf="issue.totalSubtasks === 0" class="issue-field"></div>
+    <div *ngIf="issue.totalSubtasks > 0" class="issue-field">{{issue.subtasksDone/issue.totalSubtasks | percent}} done</div>
+    <div *ngIf="issue.totalSubtasks === 0" class="issue-field"></div>
+  </div>
+</div>
