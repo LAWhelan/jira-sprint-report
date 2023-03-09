@@ -1,9 +1,9 @@
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders} from "@angular/common/http";
-import { SprintIssuesResponse, Sprint } from "../model/model";
-import { map } from "rxjs/operators"
-import {Observable, of} from "rxjs";
+import { Observable, of } from "rxjs";
+import { map } from "rxjs/operators";
 import { environment } from '../../../environments/environment';
+import { Sprint, SprintIssuesResponse } from "../model/model";
 
 
 @Injectable({
@@ -15,6 +15,7 @@ export class JiraService {
   private baseUrl: string = '';
   private apiKey: string = environment.apiKey;
   private cache: Map<string, object> = new Map<string, object>();
+  private maxResults = 200;
 
   constructor(client: HttpClient) {
     this.http = client;
@@ -33,7 +34,8 @@ export class JiraService {
     const url = [this.baseUrl, `rest/agile/1.0/sprint/${sprintKey}/issue`].join('');
     return this.http
       .get(url, {
-        headers: this.headers
+        headers: this.headers,
+        params: {maxResults: this.maxResults}
       }).pipe(
         map(res => res as SprintIssuesResponse)
       )
