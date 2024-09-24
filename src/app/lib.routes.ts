@@ -1,9 +1,9 @@
 import {Routes} from "@angular/router";
-import {ReportComponent} from "./jira-report/report/report.component";
+import {SprintReportComponent} from "./components/jira-report/sprint-report/sprint-report.component";
 
 export const AppRouterConfig: Routes = [
     {
       path: 'sprint-report',
-      component: ReportComponent
+      component: SprintReportComponent
     }
   ]

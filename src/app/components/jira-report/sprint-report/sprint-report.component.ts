@@ -1,15 +1,15 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {JiraService} from "../services/jira.service";
-import {debounceTime, fromEvent, Observable, of, Subscription, throttleTime} from 'rxjs';
-import {map, tap, take, filter} from 'rxjs/operators';
-import {SprintIssuesResponse, Issue, Sprint} from "../model/model";
+import {JiraService} from "../../../services/jira.service";
+import {debounceTime, fromEvent, Observable} from 'rxjs';
+import {map, tap} from 'rxjs/operators';
+import {Issue, Sprint} from "../../../model/model";
 
 @Component({
   selector: 'app-report',
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.css']
+  templateUrl: './sprint-report.component.html',
+  styleUrls: ['./sprint-report.component.css']
 })
-export class ReportComponent {
+export class SprintReportComponent {
   /**Constants**/
   private DONE: string = 'green';
   private IN_PROGRESS: string = 'yellow';
@@ -58,9 +58,9 @@ export class ReportComponent {
            (i.fields.issuetype.name === 'Story' || i.fields.issuetype.name === 'Bug' || i.fields.issuetype.name === 'Task'));
        })
      ).subscribe({
-       next: res => this.processSprintMetrics(),
+       next: () => this.processSprintMetrics(),
        complete: () => console.log('Complete'),
-       error: err => console.log('Error')
+       error: () => console.log('Error')
      });
   }
 
