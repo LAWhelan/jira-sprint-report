@@ -31,11 +31,11 @@ export class JiraService {
     if(this.cache.has('getSprintIssues:'+sprintKey)){
       return of(this.cache.get('getSprintIssues:'+sprintKey)) as Observable<SprintIssuesResponse>;
     }
-    const url = [this.baseUrl, `rest/agile/1.0/sprint/${sprintKey}/issue`].join('');
+    const url = this.baseUrl.concat(`rest/agile/1.0/sprint/${sprintKey}/issue`);
     return this.http
       .get(url, {
         headers: this.headers,
-        params: {maxResults: this.maxResults}
+        params: {maxResults: this.maxResults, expand: 'changelog'}
       }).pipe(
         map(res => res as SprintIssuesResponse)
       )
@@ -45,7 +45,7 @@ export class JiraService {
     if(this.cache.has('getSprint:'+sprintKey)){
       return of(this.cache.get('getSprint:'+sprintKey)) as Observable<Sprint>;
     }
-    const url = [this.baseUrl, `rest/agile/1.0/sprint/${sprintKey}`].join('');
+    const url = this.baseUrl.concat(`rest/agile/1.0/sprint/${sprintKey}`);
     return this.http
       .get(url, {
         headers: this.headers
@@ -53,4 +53,14 @@ export class JiraService {
         map(res => res as Sprint)
       )
   };
+
+  getPlannedEpics(): Observable<any> {
+    const url = this.baseUrl.concat(`rest/api/v.2/search/jql`);
+    return this.http
+      .get(url, {
+        headers: this.headers
+      }).pipe(
+        map(res => res as any)
+      )
+  }
 }
