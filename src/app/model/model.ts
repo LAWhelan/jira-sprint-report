@@ -30,3 +30,9 @@ export interface Issue {
   subtasksNotStarted: number;
   totalSubtasks: number;
 }
+
+export interface IssueList {
+  issues: [{
+    id: string
+  }]
+}

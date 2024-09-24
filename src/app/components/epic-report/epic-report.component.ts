@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {JiraService} from "../../services/jira.service";
+import {tap} from "rxjs/operators";
+import {Issue, IssueList} from "../../model/model";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-epic-report',
@@ -8,14 +11,19 @@ import {JiraService} from "../../services/jira.service";
 })
 export class EpicReportComponent implements OnInit{
   private jiraService: JiraService;
-  private epics: any;
-
+  issues$: Observable<Issue>[] = []
+  epics$:  Observable<IssueList> = new Observable<IssueList>()
   constructor(jiraService: JiraService) {
     this.jiraService = jiraService;
   }
 
   ngOnInit(): void {
-    console.log('epic-report init')
-    this.epics = this.jiraService.getPlannedEpics().subscribe();
+    this.epics$ = this.jiraService.getPlannedEpics().pipe(
+      tap(issuesList => {
+        issuesList.issues.map(value => {
+          this.issues$.push(this.jiraService.getIssue(value.id))
+        })
+      }),
+    )
   }
 }

@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
-import { Sprint, SprintIssuesResponse } from "../model/model";
+import {Issue, IssueList, Sprint, SprintIssuesResponse} from "../model/model";
 
 
 @Injectable({
@@ -39,11 +39,19 @@ export class JiraService {
       )
   };
 
-  getPlannedEpics(): Observable<any> {
+  getPlannedEpics(): Observable<IssueList> {
     const url = this.baseUrl.concat(`api/epics`);
     return this.http
       .get(url).pipe(
-        map(res => res as any)
+        map(res => res as IssueList)
+      )
+  }
+
+  getIssue(issueKey: string): Observable<Issue> {
+    const url = this.baseUrl.concat(`api/issues/${issueKey}`);
+    return this.http
+      .get(url).pipe(
+        map(res => res as Issue)
       )
   }
 }

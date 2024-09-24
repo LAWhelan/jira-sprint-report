@@ -1,1 +1,7 @@
 <p>epic-report works!</p>
+<div *ngIf="(epics$ | async)">
+<div
+  *ngFor="let issue of issues$"
+>{{issue | async | json}}
+</div>
+</div>

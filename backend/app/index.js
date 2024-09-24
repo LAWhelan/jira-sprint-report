@@ -18,4 +18,7 @@ app.get('/api/epics', async (req, res) => {
   console.log(epicResponse)
   res.json(epicResponse)
 })
+app.get('/api/issues/:issueKey', async (req, res) => {
+  res.json(await jira.getIssue(req.params.issueKey))
+})
 module.exports = app
