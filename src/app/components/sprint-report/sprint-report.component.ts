@@ -1,6 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {JiraService} from "../../services/jira.service";
-import {debounceTime, fromEvent, Observable} from 'rxjs';
+import {debounceTime, fromEvent} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
 import {Issue, Sprint} from "../../model/model";
 
@@ -15,10 +15,8 @@ export class SprintReportComponent {
   private IN_PROGRESS: string = 'yellow';
   private NOT_STARTED: string = 'blue-gray';
 
-  /**Dependencies and Observables**/
+  /**Dependencies**/
   private jiraService: JiraService;
-  sprint$: Observable<Sprint> = new Observable<Sprint>();
-  issues$: Observable<Issue[]> = new Observable<Issue[]>();
 
   /**Data binding template variables**/
   @ViewChild('submitButton') public submitButton!: ElementRef;
