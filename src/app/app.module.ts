@@ -1,21 +1,30 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import  { JiraReportModule } from "./components/jira-report/jira-report.module";
 import {RouterModule} from "@angular/router";
 import {AppRouterConfig} from "./lib.routes";
+import { EpicReportComponent } from './components/epic-report/epic-report.component';
+import {SprintReportComponent} from "./components/sprint-report/sprint-report.component";
+import {CommonModule} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import {JiraService} from "./services/jira.service";
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EpicReportComponent,
+    SprintReportComponent
   ],
   imports: [
     BrowserModule,
-    JiraReportModule,
-    RouterModule.forRoot(AppRouterConfig)
+    RouterModule.forRoot(AppRouterConfig),
+    CommonModule,
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [JiraService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,8 +1,8 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {JiraService} from "../../../services/jira.service";
+import {JiraService} from "../../services/jira.service";
 import {debounceTime, fromEvent, Observable} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
-import {Issue, Sprint} from "../../../model/model";
+import {Issue, Sprint} from "../../model/model";
 
 @Component({
   selector: 'app-report',
