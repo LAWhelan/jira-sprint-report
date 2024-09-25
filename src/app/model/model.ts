@@ -23,7 +23,10 @@ export interface Issue {
       };
     };
     summary: string;
-    customfield_10046: string;
+    customfield_10046: string;//story points
+    customfield_10109: any;//scrum team
+    customfield_10270: string;//client enabled date
+    duedate: string;
   };
   subtasksDone: number;
   subtasksInProgress: number;

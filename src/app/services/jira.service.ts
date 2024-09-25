@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
-import { Observable, of } from "rxjs";
+import {from, mergeMap, Observable, of, toArray} from "rxjs";
 import { map } from "rxjs/operators";
 import {Issue, IssueList, Sprint, SprintIssuesResponse} from "../model/model";
 
@@ -39,11 +39,14 @@ export class JiraService {
       )
   };
 
-  getPlannedEpics(): Observable<IssueList> {
+  getPlannedEpics(): Observable<Issue[]> {
     const url = this.baseUrl.concat(`api/epics`);
     return this.http
       .get(url).pipe(
-        map(res => res as IssueList)
+        map(issueList => issueList as IssueList),
+        mergeMap(issueList => from(issueList.issues.flat())),
+        mergeMap(issue => this.getIssue(issue.id)),
+        toArray()
       )
   }
 

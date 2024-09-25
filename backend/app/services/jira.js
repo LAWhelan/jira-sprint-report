@@ -1,7 +1,7 @@
-
+const fetch = require('node-fetch');
 const apiKey = process.env.api_key;
 const standardHeaders = () => {
-  const headers = new Headers();
+  const headers = new fetch.Headers();
   headers.append('Content-Type', 'application/json');
   headers.append('Accept', 'application/json');
   headers.append(
@@ -36,7 +36,7 @@ const getIssue = async (issueKey) => {
 const getEpics = async () => {
   const bodyData = {
       jql: "project = FIB and type = EPIC and status not in (closed, done, \"to do\")",
-      maxResults: 1000,
+      maxResults: 5,
      };
   const headers = standardHeaders();
   headers.append('X-Atlassian-Token', 'no-check');

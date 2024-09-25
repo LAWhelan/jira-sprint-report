@@ -1,7 +1,10 @@
-<p>epic-report works!</p>
-<div *ngIf="(epics$ | async)">
-<div
-  *ngFor="let issue of issues$"
->{{issue | async | json}}
+
+<div *ngIf="issuesByTeam$ | async as issueMap">
+  <div *ngFor="let entry of issueMap | keyvalue">
+    <h3>{{ entry.key }}</h3>
+    <ul>
+      <li *ngFor="let item of entry.value">{{ item | json }}</li>
+    </ul>
+  </div>
 </div>
-</div>
+
